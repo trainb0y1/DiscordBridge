@@ -1,0 +1,13 @@
+main: net.horizonsend.discordbridge.DiscordBridge
+name: DiscordBridge
+version: 1.0.0
+description: "A minecraft chat link which automatically syncs mutes and bans."
+api-version: 1.17
+load: POSTWORLD
+author: "PeterCrawley"
+website: "https://horizonsend.net"
+prefix: "DiscordBridge"
+libraries:
+  - org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1
+  - net.essentialsx:EssentialsX:2.19.0
+  - net.dv8tion:JDA:5.0.0-alpha.2
