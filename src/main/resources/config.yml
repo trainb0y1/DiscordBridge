@@ -1,0 +1,7 @@
+token: "ENTER TOKEN HERE"
+
+roleSync:
+ - default: 000000000000000000
+
+globalChannel: 000000000000000000
+consoleChannel: 000000000000000000

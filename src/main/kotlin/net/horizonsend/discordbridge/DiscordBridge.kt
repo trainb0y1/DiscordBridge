@@ -14,4 +14,10 @@ class DiscordBridge: JavaPlugin() {
 
 		getPluginManager().registerEvents(MinecraftListener(), this)
 	}
+
+	override fun reloadConfig() {
+		super.reloadConfig()
+
+		getPluginManager().callEvent(DiscordBridgeConfigReloadEvent(config))
+	}
 }
