@@ -78,14 +78,6 @@ class DiscordBridge: JavaPlugin() {
 		discordBuilder.addEventListeners(DiscordListener())
 
 		discord = discordBuilder.build()
-
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
-			discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size} player${if (Bukkit.getOnlinePlayers().size == 1) "" else "s"}")
-		}, 0, 400)
-
-		Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
-			discord.presence.activity = Activity.playing(" on play.horizonsend.net")
-		}, 200, 400)
 	}
 
 	override fun onDisable() {
