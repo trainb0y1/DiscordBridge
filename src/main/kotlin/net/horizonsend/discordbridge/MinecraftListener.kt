@@ -35,11 +35,7 @@ class MinecraftListener: Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	fun onPlayerDeath(event: PlayerDeathEvent) {
-		val deathMessage: Component = event.deathMessage()!!
-
-		val finalMessage = PaperComponents.plainSerializer().serialize(deathMessage)
-
-		discord.getTextChannelById(globalChannel)!!.sendMessage(finalMessage).queue();
+		discord.getTextChannelById(globalChannel)!!.sendMessage(PaperComponents.plainSerializer().serialize(event.deathMessage()!!)).queue();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
