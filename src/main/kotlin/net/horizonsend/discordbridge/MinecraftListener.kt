@@ -2,7 +2,13 @@ package net.horizonsend.discordbridge
 
 import com.destroystokyo.paper.event.server.ServerTickEndEvent
 import io.papermc.paper.event.player.AsyncChatEvent
+import net.dv8tion.jda.api.MessageBuilder
 import net.ess3.api.events.MuteStatusChangeEvent
+import net.horizonsend.discordbridge.DiscordBridge.Companion.discord
+import net.horizonsend.discordbridge.DiscordBridge.Companion.globalChannel
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText
+import org.apache.logging.log4j.message.Message
 import org.bukkit.Bukkit.getBannedPlayers
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -22,7 +28,7 @@ class MinecraftListener: Listener {
 
 	@EventHandler
 	fun onPlayerChat(event: AsyncChatEvent) {
-		// Player chat event
+		discord.getTextChannelById(globalChannel)!!.sendMessage(plainText().serialize(event.message())).queue();
 	}
 
 	@EventHandler

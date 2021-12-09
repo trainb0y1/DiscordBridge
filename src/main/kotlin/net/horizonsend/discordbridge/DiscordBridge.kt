@@ -1,5 +1,6 @@
 package net.horizonsend.discordbridge
 
+import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.MemberCachePolicy
@@ -18,6 +19,9 @@ class DiscordBridge: JavaPlugin() {
 			private set
 
 		lateinit var consoleChannel: String
+			private set
+
+		lateinit var discord: JDA
 			private set
 	}
 
@@ -71,7 +75,11 @@ class DiscordBridge: JavaPlugin() {
 
 		discordBuilder.addEventListeners(DiscordListener())
 
-		discordBuilder.build()
+		discord = discordBuilder.build()
+	}
+
+	override fun onDisable() {
+		discord.shutdown()
 	}
 
 	override fun reloadConfig() {
