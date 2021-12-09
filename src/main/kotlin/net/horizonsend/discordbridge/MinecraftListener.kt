@@ -28,7 +28,14 @@ class MinecraftListener: Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	fun onPlayerChat(event: AsyncChatEvent) {
-		discord.getTextChannelById(globalChannel)!!.sendMessage(plainText().serialize(event.message())).queue();
+		val channel = discord.getTextChannelById(globalChannel)!!
+
+		val playerName = event.player.name
+		val playerMessage = plainText().serialize( event.message() )
+
+		val message = channel.sendMessage("$playerName: $playerMessage")
+
+		message.queue();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
