@@ -93,7 +93,5 @@ class DiscordBridge: JavaPlugin() {
 
 		globalChannel = config.getString("globalChannel")!!
 		consoleChannel = config.getString("consoleChannel")!!
-
-		getPluginManager().callEvent(DiscordBridgeConfigReloadEvent(config))
 	}
 }
