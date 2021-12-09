@@ -25,7 +25,7 @@ class MinecraftListener: Listener {
 
 	@EventHandler
 	fun onPlayerLeave(event: PlayerQuitEvent) {
-		discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size} player${if ((Bukkit.getOnlinePlayers().size - 1) == 1) "" else "s"}")
+		discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size - 1} player${if (Bukkit.getOnlinePlayers().size - 1 == 1) "" else "s"}")
 	}
 
 	@EventHandler
