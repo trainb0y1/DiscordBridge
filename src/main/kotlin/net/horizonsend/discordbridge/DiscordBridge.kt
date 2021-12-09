@@ -78,6 +78,8 @@ class DiscordBridge: JavaPlugin() {
 		discordBuilder.addEventListeners(DiscordListener())
 
 		discord = discordBuilder.build()
+
+		discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size} player${if (Bukkit.getOnlinePlayers().size == 1) "" else "s"}")
 	}
 
 	override fun onDisable() {
