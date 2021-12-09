@@ -17,6 +17,8 @@ class DiscordListener: ListenerAdapter() {
 	}
 
 	override fun onMessageReceived(event: MessageReceivedEvent) {
+		if (event.author.isBot) return
+
 		when (event.channel.id) {
 			globalChannel -> {
 				getServer().broadcast(text(event.message.contentRaw))
