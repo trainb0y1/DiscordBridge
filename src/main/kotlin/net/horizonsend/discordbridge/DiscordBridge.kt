@@ -2,9 +2,11 @@ package net.horizonsend.discordbridge
 
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
+import net.dv8tion.jda.api.entities.Activity
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.MemberCachePolicy
 import net.dv8tion.jda.api.utils.cache.CacheFlag
+import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -76,6 +78,14 @@ class DiscordBridge: JavaPlugin() {
 		discordBuilder.addEventListeners(DiscordListener())
 
 		discord = discordBuilder.build()
+
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+			discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size} player${if (Bukkit.getOnlinePlayers().size == 1) "" else "s"}")
+		}, 0, 400)
+
+		Bukkit.getScheduler().runTaskTimerAsynchronously(this, Runnable {
+			discord.presence.activity = Activity.playing(" on play.horizonsend.net")
+		}, 200, 400)
 	}
 
 	override fun onDisable() {
