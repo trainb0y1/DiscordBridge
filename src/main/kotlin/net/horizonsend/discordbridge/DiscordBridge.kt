@@ -13,6 +13,12 @@ class DiscordBridge: JavaPlugin() {
 			private set
 
 		private lateinit var token: String
+
+		lateinit var globalChannel: String
+			private set
+
+		lateinit var consoleChannel: String
+			private set
 	}
 
 	override fun onEnable() {
@@ -72,6 +78,9 @@ class DiscordBridge: JavaPlugin() {
 		super.reloadConfig()
 
 		token = config.getString("token")!!
+
+		globalChannel = config.getString("globalChannel")!!
+		consoleChannel = config.getString("consoleChannel")!!
 
 		getPluginManager().callEvent(DiscordBridgeConfigReloadEvent(config))
 	}
