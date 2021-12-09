@@ -6,8 +6,6 @@ import net.dv8tion.jda.api.entities.Activity
 import net.ess3.api.events.MuteStatusChangeEvent
 import net.horizonsend.discordbridge.DiscordBridge.Companion.discord
 import net.horizonsend.discordbridge.DiscordBridge.Companion.globalChannel
-import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer.plainText
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
