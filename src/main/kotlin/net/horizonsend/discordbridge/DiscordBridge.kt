@@ -30,7 +30,6 @@ class DiscordBridge: JavaPlugin() {
 		discordBuilder.setMemberCachePolicy(MemberCachePolicy.ALL)
 
 		// Disable caching of things we do not need.
-		// Must keep ROLE_TAGS enabled
 		discordBuilder.disableCache(
 			CacheFlag.ACTIVITY,
 			CacheFlag.CLIENT_STATUS,
@@ -40,8 +39,10 @@ class DiscordBridge: JavaPlugin() {
 			CacheFlag.VOICE_STATE
 		)
 
+		// Enable ROLE_TAGS
+		discordBuilder.enableCache(CacheFlag.ROLE_TAGS)
+
 		// Disable the intents we do not need.
-		// Must keep GUILD_MESSAGES, DIRECT_MESSAGES, and GUILD_MEMBERS enabled
 		discordBuilder.disableIntents(
 			GatewayIntent.GUILD_BANS,
 			GatewayIntent.GUILD_EMOJIS,
@@ -55,9 +56,16 @@ class DiscordBridge: JavaPlugin() {
 			GatewayIntent.DIRECT_MESSAGE_TYPING
 		)
 
+		// Enable GUILD_MESSAGES, DIRECT_MESSAGES, and GUILD_MEMBERS
+		discordBuilder.enableIntents(
+			GatewayIntent.GUILD_MESSAGES,
+			GatewayIntent.DIRECT_MESSAGES,
+			GatewayIntent.GUILD_MEMBERS
+		)
+
 		discordBuilder.addEventListeners(DiscordListener())
 
-		val discord = discordBuilder.build()
+		discordBuilder.build()
 	}
 
 	override fun reloadConfig() {
