@@ -18,11 +18,12 @@ repositories {
 }
 
 dependencies {
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+	implementation("net.dv8tion:JDA:5.0.0-alpha.2")
+
 	compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 
-	compileOnly("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
 	compileOnly("net.essentialsx:EssentialsX:2.19.0")
-	compileOnly("net.dv8tion:JDA:5.0.0-alpha.2")
 }
 
 tasks.withType<KotlinCompile> {
