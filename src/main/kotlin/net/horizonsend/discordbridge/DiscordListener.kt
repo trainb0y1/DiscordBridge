@@ -18,6 +18,7 @@ class DiscordListener: ListenerAdapter() {
 	override fun onMessageReceived(event: MessageReceivedEvent) {
 		when (event.channel.id) {
 			globalChannel -> {
+				// TODO: Remove deprecated function.
 				getServer().broadcastMessage(event.message.contentRaw)
 			}
 			consoleChannel -> {
