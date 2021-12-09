@@ -26,7 +26,7 @@ object AccountLinkManager {
 	}
 
 	fun unlinkAccount(discord: Int) {
-		getLinkedAccounts(discord).forEach { linkedAccounts.remove(it) }
+		linkedAccounts.filter { it.value == discord }.keys.forEach { linkedAccounts.remove(it) }
 		saveLinkedAccounts()
 	}
 
@@ -36,10 +36,6 @@ object AccountLinkManager {
 
 	fun isLinked(minecraft: String): Boolean {
 		return linkedAccounts.containsKey(minecraft)
-	}
-
-	fun getLinkedAccounts(discord: Int): Set<String> {
-		return linkedAccounts.filter { it.value == discord }.keys
 	}
 
 	fun getLinkedAccount(minecraft: String): Int? {
