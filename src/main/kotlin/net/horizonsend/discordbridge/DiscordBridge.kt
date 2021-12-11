@@ -32,6 +32,7 @@ class DiscordBridge: JavaPlugin() {
 	override fun onEnable() {
 		plugin = this
 
+		saveResource("accounts.json", false)
 		saveDefaultConfig()
 		reloadConfig()
 

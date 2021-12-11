@@ -15,7 +15,7 @@ object AccountLinkManager {
 		accountsWaitingLink.add(AccountLink(discord, minecraft))
 	}
 
-	private val linkedAccounts = Json.decodeFromStream<AccountLink>(File(plugin.dataFolder, "accounts.json").inputStream())
+	private val linkedAccounts = Json.decodeFromStream<MutableSet<AccountLink>>(File(plugin.dataFolder, "accounts.json").inputStream())
 
 	private fun saveLinkedAccounts() {
 		Json.encodeToStream(linkedAccounts, File(plugin.dataFolder, "accounts.json").outputStream())

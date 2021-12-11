@@ -32,6 +32,9 @@ class Link : CommandExecutor {
 
 		addAccountWaitingLink(user.idLong, sender.uniqueId.toString())
 
+		sender.sendMessage("Your discord account has been messaged with further instructions. If you are have not received any messages, please check your privacy settings.")
+		user.openPrivateChannel().complete(true).sendMessage("To confirm the your minecraft account ${sender.name} as being linked to your discord account please type \"confirm\" in this channel.").queue()
+
 		return true
 	}
 }
