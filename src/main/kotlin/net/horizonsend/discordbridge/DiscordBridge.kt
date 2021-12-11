@@ -3,10 +3,11 @@ package net.horizonsend.discordbridge
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
+import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.MemberCachePolicy
 import net.dv8tion.jda.api.utils.cache.CacheFlag
-import org.bukkit.Bukkit
+import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.plugin.java.JavaPlugin
 
@@ -15,12 +16,10 @@ class DiscordBridge: JavaPlugin() {
 		lateinit var plugin: DiscordBridge
 			private set
 
-		private lateinit var token: String
-
-		lateinit var globalChannel: String
+		lateinit var globalChannel: TextChannel
 			private set
 
-		lateinit var consoleChannel: String
+		lateinit var consoleChannel: TextChannel
 			private set
 
 		lateinit var discord: JDA
@@ -30,13 +29,10 @@ class DiscordBridge: JavaPlugin() {
 	override fun onEnable() {
 		plugin = this
 
-		getPluginManager().registerEvents(MinecraftListener(), this)
-
-		// /!\ Must be called after registering events
 		saveDefaultConfig()
 		reloadConfig()
 
-		val discordBuilder = JDABuilder.createDefault(token)
+		val discordBuilder = JDABuilder.createDefault(config.getString("token")!!)
 
 		// Keep track of members, so we know when role changes happen.
 		discordBuilder.setMemberCachePolicy(MemberCachePolicy.ALL)
@@ -51,25 +47,9 @@ class DiscordBridge: JavaPlugin() {
 			CacheFlag.VOICE_STATE
 		)
 
-		// Enable ROLE_TAGS
-		discordBuilder.enableCache(CacheFlag.ROLE_TAGS)
-
-		// Disable the intents we do not need.
-		discordBuilder.disableIntents(
-			GatewayIntent.GUILD_BANS,
-			GatewayIntent.GUILD_EMOJIS,
-			GatewayIntent.GUILD_WEBHOOKS,
-			GatewayIntent.GUILD_INVITES,
-			GatewayIntent.GUILD_VOICE_STATES,
-			GatewayIntent.GUILD_PRESENCES,
-			GatewayIntent.GUILD_MESSAGE_REACTIONS,
-			GatewayIntent.GUILD_MESSAGE_TYPING,
-			GatewayIntent.DIRECT_MESSAGE_REACTIONS,
-			GatewayIntent.DIRECT_MESSAGE_TYPING
-		)
-
 		// Enable GUILD_MESSAGES, DIRECT_MESSAGES, and GUILD_MEMBERS
-		discordBuilder.enableIntents(
+		// Disable everything else.
+		discordBuilder.setEnabledIntents(
 			GatewayIntent.GUILD_MESSAGES,
 			GatewayIntent.DIRECT_MESSAGES,
 			GatewayIntent.GUILD_MEMBERS
@@ -77,21 +57,24 @@ class DiscordBridge: JavaPlugin() {
 
 		discordBuilder.addEventListeners(DiscordListener())
 
+		discordBuilder.setActivity(Activity.playing(" with ${getOnlinePlayers().size} player${if (getOnlinePlayers().size == 1) "" else "s"}"))
+
 		discord = discordBuilder.build()
 
-		discord.presence.activity = Activity.playing(" with ${Bukkit.getOnlinePlayers().size} player${if (Bukkit.getOnlinePlayers().size == 1) "" else "s"}")
+		discord.awaitReady()
+
+		globalChannel = discord.getTextChannelById( config.getString("globalChannel")!! )!!
+
+		globalChannel.sendMessage("**:arrow_up_small: Server is up!**").queue()
+
+		consoleChannel = discord.getTextChannelById( config.getString("consoleChannel")!! )!!
+
+		getPluginManager().registerEvents(MinecraftListener(), this)
 	}
 
 	override fun onDisable() {
+		globalChannel.sendMessage("**:arrow_down_small: Server is down!**").queue()
+
 		discord.shutdown()
-	}
-
-	override fun reloadConfig() {
-		super.reloadConfig()
-
-		token = config.getString("token")!!
-
-		globalChannel = config.getString("globalChannel")!!
-		consoleChannel = config.getString("consoleChannel")!!
 	}
 }

@@ -28,19 +28,17 @@ class MinecraftListener: Listener {
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	fun onPlayerChat(event: AsyncChatEvent) {
-		val channel = discord.getTextChannelById(globalChannel)!!
-
 		val playerName = event.player.name
 		val playerMessage = plainText().serialize( event.message() )
 
-		val message = channel.sendMessage("$playerName: $playerMessage")
+		val message = globalChannel.sendMessage("$playerName: $playerMessage")
 
-		message.queue();
+		message.queue()
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
 	fun onPlayerDeath(event: PlayerDeathEvent) {
-		discord.getTextChannelById(globalChannel)!!.sendMessage(PaperComponents.plainSerializer().serialize(event.deathMessage()!!)).queue();
+		globalChannel.sendMessage(PaperComponents.plainSerializer().serialize(event.deathMessage()!!)).queue()
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
