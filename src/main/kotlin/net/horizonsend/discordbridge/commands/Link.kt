@@ -11,6 +11,10 @@ import org.bukkit.entity.Player
 @ExperimentalSerializationApi
 class Link : CommandExecutor {
 	override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
+		if (args.size != 1) {
+			sender.sendMessage("Invalid number of arguments.")
+			return false
+		}
 		if (sender !is Player) {
 			sender.sendMessage("Only a player can link an account.")
 			return false
