@@ -20,13 +20,13 @@ class Link : CommandExecutor {
 			return false
 		}
 
-		val user = when (args[0].matches(Regex("\\d{17,18}"))) {
+		val user = try { when (args[0].matches(Regex("\\d{17,18}"))) {
 			true -> discord.getUserById(args[0])
 			false -> discord.getUserByTag(args[0])
-		}
+		} } catch (e: Exception) { null }
 
 		if (user == null) {
-			sender.sendMessage("User not found")
+			sender.sendMessage("User ${args[0]} is invalid or does not exist!")
 			return false
 		}
 
