@@ -11,7 +11,10 @@ import org.bukkit.entity.Player
 @ExperimentalSerializationApi
 class Link : CommandExecutor {
 	override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
-		if (sender !is Player) return false
+		if (sender !is Player) {
+			sender.sendMessage("Only a player can link an account.")
+			return false
+		}
 
 		val user = when (args[0].matches(Regex("\\d{17,18}"))) {
 			true -> discord.getUserById(args[0])

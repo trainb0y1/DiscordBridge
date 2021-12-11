@@ -1,5 +1,6 @@
 package net.horizonsend.discordbridge
 
+import kotlinx.serialization.ExperimentalSerializationApi
 import net.dv8tion.jda.api.JDA
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.entities.Activity
@@ -7,10 +8,12 @@ import net.dv8tion.jda.api.entities.TextChannel
 import net.dv8tion.jda.api.requests.GatewayIntent
 import net.dv8tion.jda.api.utils.MemberCachePolicy
 import net.dv8tion.jda.api.utils.cache.CacheFlag
+import net.horizonsend.discordbridge.commands.Link
 import org.bukkit.Bukkit.getOnlinePlayers
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.plugin.java.JavaPlugin
 
+@ExperimentalSerializationApi
 class DiscordBridge: JavaPlugin() {
 	companion object {
 		lateinit var plugin: DiscordBridge
@@ -70,6 +73,8 @@ class DiscordBridge: JavaPlugin() {
 		consoleChannel = discord.getTextChannelById( config.getString("consoleChannel")!! )!!
 
 		getPluginManager().registerEvents(MinecraftListener(), this)
+
+		this.getCommand("link")!!.setExecutor(Link())
 	}
 
 	override fun onDisable() {

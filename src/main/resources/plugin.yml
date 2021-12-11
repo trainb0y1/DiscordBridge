@@ -7,3 +7,7 @@ load: POSTWORLD
 author: PeterCrawley
 website: https://horizonsend.net
 depend: [Essentials]
+commands:
+  link:
+    description: Link your discord account to your minecraft account.
+    usage: /<command> <discord>
