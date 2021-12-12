@@ -24,6 +24,7 @@ dependencies {
 	compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
 
 	compileOnly("net.essentialsx:EssentialsX:2.19.0")
+	compileOnly("net.luckperms:api:5.3")
 }
 
 tasks.withType<KotlinCompile> {
