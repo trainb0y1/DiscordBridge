@@ -73,6 +73,9 @@ class DiscordBridge: JavaPlugin() {
 
 		consoleChannel = discord.getTextChannelById( config.getString("consoleChannel")!! )!!
 
+		// Could use discord.upsertCommand() but it can take an hour to update.
+		globalChannel.guild.upsertCommand("playerlist", "Show online players").queue()
+
 		getPluginManager().registerEvents(MinecraftListener(), this)
 
 		this.getCommand("link")!!.setExecutor(Link())
